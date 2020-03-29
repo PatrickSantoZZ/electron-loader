@@ -43,7 +43,7 @@ function load(appDir) {
 	// Black hole any writes that we can't disable
 	app.setPath('userData', path.join(app.getPath('temp'), 'nul'))
 
-	app.on('ready', () => {
+	app.once('ready', () => {
 		// Run any JavaScript that needs to execute in the main process
 		if(appConfig.main_js) require(path.join(appDir, appConfig.main_js))
 
