@@ -43,14 +43,13 @@ function load(appDir) {
 	// Black hole any writes that we can't disable
 	app.setPath('userData', path.join(app.getPath('temp'), 'nul'))
 
-	// Run any JavaScript that needs to execute in the main process
-	if(appConfig.main_js) require(path.join(appDir, appConfig.main_js))
+	app.on('ready', () => {
+		// Run any JavaScript that needs to execute in the main process
+		if(appConfig.main_js) require(path.join(appDir, appConfig.main_js))
 
-	// Show our main window
-	if(appConfig.main)
-		app.on('ready', () => {
-			new BrowserWindow(appConfig.window).loadURL(`file://${path.join(appDir, appConfig.main)}`)
-		})
+		// Show our main window
+		if(appConfig.main) new BrowserWindow(appConfig.window).loadURL(`file://${path.join(appDir, appConfig.main)}`)
+	})
 }
 
 if(process.mainModule.filename === __filename)
